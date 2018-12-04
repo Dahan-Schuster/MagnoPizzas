@@ -1,0 +1,6 @@
+0002;Massa;600;Pasta & CIA;
+0003;Frango;050;Pasta & CIA;
+0004;Batata;050;Batata Top;
+0005;Pimentão;120;Pasta & CIA;
+0006;Queijo;300;Pasta & CIA;
+0007;Repolho;000;Tomates;

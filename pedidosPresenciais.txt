@@ -1,0 +1,4 @@
+10/10/2018;23:25:01;01;Marcus Gold;15.00;@0001 | 001 | 15.00 | Chicken Little
+null;10:38:55;01;Marcus Gold;50.00;@0002 | 002 | 50.00 | Portuguesa
+null;13:34:30;01;Marcus Gold; 0.00;
+null;13:35:26;02;Marcus Gold;8000.00;@0003 | 200 | 4000.00 | Pizza de Batata@0003 | 200 | 4000.00 | Pizza de Batata

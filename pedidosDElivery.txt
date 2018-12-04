@@ -1,0 +1,4 @@
+a;23:23:01;Rua Pacatuba, 14;Centro;Portão Branco;Marcus Gold;15.00;@0001 | 001 | 15.00 | Chicken Little
+09/010/2018;00:07:20;Rua dos Bobos, 0;Engraçado;Sem porta, sem nada;Marcus Gold;55.00;@0002 | 001 | 55.00 | Portuguesa
+11/10/2018;10:40:15;rua pernambuco 1166;siqueira campos;colegio rodrigues doreA;Marcus Gold;140.00;@0001 | 002 | 60.00 | Chicken Little@0001 | 002 | 80.00 | Chicken Little
+16/010/2018;13:34:02;Rua Pacatuba, 15;Centro;Portão branco;Marcus Gold;130.00;@0003 | 001 | 30.00 | Pizza de Batata@0001 | 002 | 100.00 | Chicken Little

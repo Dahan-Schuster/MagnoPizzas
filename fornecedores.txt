@@ -1,0 +1,6 @@
+22.222.222/2222-22;Pasta & CIA;(71) 3222-2222;macarrone@gmail.com
+11.111.111/1111-11;Batata Top;(32) 3311-22222;batatatop@email.com
+33.333.333/3333-33;Carne de Frango;(32) 3233-3333;carnesbrancas@email.com
+44.444.444/4444-44;Carnes Vermelhas;(32) 3244-4444;carnes@email.com
+12.425.535/4266-17;ingrid;999999;ingrid7777
+12.345.678/9262-62;carnes;7998877665;carnes
