@@ -36,7 +36,7 @@ public class TelaMenuPrincipal extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton setData;
+	private JButton botaoAbrirTelaAlterarData;
 
 	/**
 	 * Launch the application.
@@ -129,19 +129,19 @@ public class TelaMenuPrincipal extends JFrame {
 		
 		//Mudei denovo e denovo e denovo
 		
-		setData = new JButton(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
-		setData.setBounds(350, 380, 150, 40);
-		setData.setBackground(new Color(165, 42, 42));
-		setData.setForeground(Color.white);
-		setData.setFocusable(false);
-		setData.addActionListener(new ActionListener() {
+		botaoAbrirTelaAlterarData = new JButton(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+		botaoAbrirTelaAlterarData.setBounds(350, 380, 150, 40);
+		botaoAbrirTelaAlterarData.setBackground(new Color(165, 42, 42));
+		botaoAbrirTelaAlterarData.setForeground(Color.white);
+		botaoAbrirTelaAlterarData.setFocusable(false);
+		botaoAbrirTelaAlterarData.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new TelaAlterarData().setVisible(true);
 			}
 		});
-		panel.add(setData);
+		panel.add(botaoAbrirTelaAlterarData);
 		
 		// eita
 
@@ -175,7 +175,7 @@ public class TelaMenuPrincipal extends JFrame {
 					e.consume();
 
 					// c�digo aqui
-					new TelaTipoPedido(setData.getText()).setVisible(true);
+					new TelaTipoPedido(botaoAbrirTelaAlterarData.getText()).setVisible(true);
 				}
 
 			}
@@ -225,8 +225,8 @@ public class TelaMenuPrincipal extends JFrame {
 
 	}
 	
-	private void setDataText(String text) {
-		setData.setText(text);
+	private void AlterarTextoBotaoData(String text) {
+		botaoAbrirTelaAlterarData.setText(text);
 	}
 
 	private class TelaAlterarData extends JFrame {
@@ -278,13 +278,19 @@ public class TelaMenuPrincipal extends JFrame {
 			
 		}
 		
+		static final int CORRECT_DATA_LENGTH = 11;
+		
 		public void getData() {
 			String data = calendario.getText();
-			if (data.length() == 11) {
-				data = data.substring(0, 3) + data.substring(4);
+			if (data.length() == CORRECT_DATA_LENGTH) {
+				
+				String dataApenasComDias = data.substring(0, 3);
+				String dataComMesEAno = data.substring(4);
+				
+				data = dataApenasComDias + dataComMesEAno;
 			}
 			
-			setDataText(data);
+			AlterarTextoBotaoData(data);
 			dispose();
 			
 		}
