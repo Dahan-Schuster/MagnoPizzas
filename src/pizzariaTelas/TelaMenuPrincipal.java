@@ -4,11 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -24,6 +29,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
@@ -37,6 +44,15 @@ public class TelaMenuPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton botaoAbrirTelaAlterarData;
+	private JMenuBar menuBar;
+	private JMenu menuAtalhos;
+	private JMenuItem atalhoTelaAjuda;
+	private JMenuItem atalhoTelaPedidoPresencial;
+	private JMenuItem atalhoTelaPedidoDelivery;
+	private JMenuItem atalhoTelaFecharMesa;
+
+	static final int WIDTH = 450;
+	static final int HEIGTH = 300;
 
 	/**
 	 * Launch the application.
@@ -54,82 +70,160 @@ public class TelaMenuPrincipal extends JFrame {
 		});
 	}
 
+	private Dimension getDimension() {
+		return new Dimension(WIDTH, HEIGTH);
+	}
+
+	private void chamarTelaPorAtalho(int atalho, boolean isAltDown) {
+		try {
+			if (isAltDown) {
+				switch (atalho) {
+				// Atalhos para as telas de cadastro
+				case KeyEvent.VK_1:
+					new TelaCadastroFornecedor().setVisible(true);
+					break;
+				case KeyEvent.VK_2:
+					new TelaCadastroMesa().setVisible(true);
+					break;
+				case KeyEvent.VK_3:
+					new TelaCadastrarItem().setVisible(true);
+					break;
+				case KeyEvent.VK_4:
+					new TelaCadastroFuncionario().setVisible(true);
+					break;
+				case KeyEvent.VK_5:
+					new TelaCadastrarReceita().setVisible(true);
+					break;
+				}
+			} else {
+				switch (atalho) {
+				// Atalho para a tela de Ajuda
+				case KeyEvent.VK_F1:
+					new TelaAjuda().setVisible(true);
+					break;
+				// Atalhos para as telas de pedidos
+				case KeyEvent.VK_F2:
+					new TelaPresencial().setVisible(true);
+					break;
+				case KeyEvent.VK_F3:
+					new TelaDelivery().setVisible(true);
+					break;
+				case KeyEvent.VK_F4:
+					new TelaFecharMesa().setVisible(true);
+					break;
+				case KeyEvent.VK_SPACE:
+					menuAtalhos.doClick();
+					break;
+				}
+			}
+
+		} catch (IOException | ParseException possibleExeptions) {
+			possibleExeptions.printStackTrace();
+		}
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
 		setTitle("MAGNO PIZZAS - MENU PRINCIPAL");
-		setResizable(false);
-		setPreferredSize(new Dimension(450, 300));
+		setPreferredSize(getDimension());
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 531, 479);
 		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				try {
-					if (e.isAltDown()) {
-						switch (e.getKeyCode()) {
-						// Atalhos para as telas de cadastro
-						case KeyEvent.VK_1:
-							new TelaCadastroFornecedor().setVisible(true);
-							break;
-						case KeyEvent.VK_2:
-							new TelaCadastroMesa().setVisible(true);
-							break;
-						case KeyEvent.VK_3:
-							new TelaCadastrarItem().setVisible(true);
-							break;
-						case KeyEvent.VK_4:
-							new TelaCadastroFuncionario().setVisible(true);
-							break;
-						case KeyEvent.VK_5:
-							new TelaCadastrarReceita().setVisible(true);
-							break;
-						}
+			public void keyPressed(KeyEvent eventoTeclado) {
 
-					} else {
-						switch (e.getKeyCode()) {
-						// Atalho para a tela de Ajuda
-						case KeyEvent.VK_F1:
-							new TelaAjuda().setVisible(true);
-							break;
+				int atalho = eventoTeclado.getKeyCode();
 
-						// Atalhos para as telas de pedidos
-						case KeyEvent.VK_F2:
-							new TelaPresencial().setVisible(true);
-							break;
-						case KeyEvent.VK_F3:
-							new TelaDelivery().setVisible(true);
-							break;
-						case KeyEvent.VK_F4:
-							new TelaFecharMesa().setVisible(true);
-							break;
-						}
-					}
+				if (eventoTeclado.isAltDown()) {
+					chamarTelaPorAtalho(atalho, true);
 
-				} catch (IOException | ParseException e1) {
-					e1.printStackTrace();
+				} else {
+					chamarTelaPorAtalho(atalho, false);
 				}
 			}
 		});
+
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout());
+		setContentPane(contentPane);
+
+		menuBar = new JMenuBar();
+		menuAtalhos = (JMenu) menuBar.add(new JMenu("Atalhos"));
+
+		atalhoTelaAjuda = (JMenuItem) menuAtalhos.add(new JMenuItem("Ajuda"));
+		atalhoTelaAjuda.setAccelerator(KeyStroke.getKeyStroke("F1"));
+		atalhoTelaAjuda.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TelaAjuda().setVisible(true);
+			}
+		});
+
+		atalhoTelaPedidoPresencial = (JMenuItem) menuAtalhos.add(new JMenuItem("Presencial"));
+		atalhoTelaPedidoPresencial.setAccelerator(KeyStroke.getKeyStroke("F2"));
+		atalhoTelaPedidoPresencial.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TelaPresencial().setVisible(true);
+				} catch (IOException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		atalhoTelaPedidoDelivery = (JMenuItem) menuAtalhos.add(new JMenuItem("Delivery"));
+		atalhoTelaPedidoDelivery.setAccelerator(KeyStroke.getKeyStroke("F3"));
+		atalhoTelaPedidoDelivery.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TelaDelivery().setVisible(true);
+				} catch (IOException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		atalhoTelaFecharMesa = (JMenuItem) menuAtalhos.add(new JMenuItem("Fechar Mesa"));
+		atalhoTelaFecharMesa.setAccelerator(KeyStroke.getKeyStroke("F4"));
+		atalhoTelaFecharMesa.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new TelaFecharMesa().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+
+		contentPane.add(menuBar, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 505, 427);
-		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		//Mudei denovo e denovo e denovo
-		
-		botaoAbrirTelaAlterarData = new JButton(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+		contentPane.add(panel, BorderLayout.CENTER);
+
+		botaoAbrirTelaAlterarData = new JButton(
+				new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
 		botaoAbrirTelaAlterarData.setBounds(350, 380, 150, 40);
 		botaoAbrirTelaAlterarData.setBackground(new Color(165, 42, 42));
 		botaoAbrirTelaAlterarData.setForeground(Color.white);
@@ -138,11 +232,12 @@ public class TelaMenuPrincipal extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TelaAlterarData().setVisible(true);;
+				new TelaAlterarData().setVisible(true);
+				;
 			}
 		});
 		panel.add(botaoAbrirTelaAlterarData);
-		
+
 		// eita
 
 		JLabel label = new JLabel("");
@@ -219,12 +314,10 @@ public class TelaMenuPrincipal extends JFrame {
 	}
 
 	private void chamarTelaCadastros() {
-
-		// c�digo aqui
 		new TelaCadastros().setVisible(true);
 
 	}
-	
+
 	private void AlterarTextoBotaoData(String text) {
 		botaoAbrirTelaAlterarData.setText(text);
 	}
@@ -240,16 +333,34 @@ public class TelaMenuPrincipal extends JFrame {
 		private JPanel contentPane;
 		private JPanel panel;
 
-		private JButton btOk;
+		private JButton btn_Ok;
 
 		public TelaAlterarData() {
-			calendario.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+
+			SimpleDateFormat formatadorDeData = new SimpleDateFormat("dd/MM/yyyy");
+			Date dataSemFormatacao = new Date(System.currentTimeMillis());
+			String dataFormatada = formatadorDeData.format(dataSemFormatacao);
+
+			calendario.setText(dataFormatada);
 			calendario.setBounds(40, 40, 200, 35);
-			
+
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Alterar data");
 			setBounds(10, 10, 300, 200);
 			setLocationRelativeTo(null);
+
+			addWindowFocusListener(new WindowFocusListener() {
+
+				@Override
+				public void windowLostFocus(WindowEvent e) {
+					fechar();
+
+				}
+
+				@Override
+				public void windowGainedFocus(WindowEvent e) {
+				}
+			});
 
 			contentPane = new JPanel();
 			contentPane.setBackground(new Color(165, 42, 42));
@@ -263,37 +374,42 @@ public class TelaMenuPrincipal extends JFrame {
 			contentPane.add(panel);
 			panel.add(calendario);
 
-			btOk = new JButton("OK");
-			btOk.setBounds(100, 100, 80, 30);
-			btOk.setBackground(new Color(165, 42, 42));
-			btOk.setForeground(Color.WHITE);
-			btOk.addActionListener(new ActionListener() {
+			btn_Ok = new JButton("OK");
+			btn_Ok.setBounds(100, 100, 80, 30);
+			btn_Ok.setBackground(new Color(165, 42, 42));
+			btn_Ok.setForeground(Color.WHITE);
+			btn_Ok.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					getData();
 				}
 			});
-			panel.add(btOk);
-			
-			
-			
-		}
-		
-		static final int CORRECT_DATA_LENGTH = 11;
-		
-		public void getData() {
-			String data = calendario.getText();
-			if (data.length() == CORRECT_DATA_LENGTH) {
-				
-				String dataApenasComDias = data.substring(0, 3);
-				String dataComMesEAno = data.substring(4);
-				
-				data = dataApenasComDias + dataComMesEAno;
-			}
-			
-			AlterarTextoBotaoData(data);
-			dispose();
-			
+			panel.add(btn_Ok);
+
 		}
 
+		static final int TAMANHO_CORRETO_PARA_DATA = 10;
+
+		public void getData() {
+			String dataEscolhida = calendario.getText();
+
+			final int TAMANHO_DA_DATA = dataEscolhida.length();
+
+			if (TAMANHO_DA_DATA > TAMANHO_CORRETO_PARA_DATA) {
+
+				String dataApenasComDias = dataEscolhida.substring(0, 3);
+				String dataComMesEAno = dataEscolhida.substring(4);
+
+				dataEscolhida = dataApenasComDias + dataComMesEAno;
+			}
+
+			AlterarTextoBotaoData(dataEscolhida);
+			fechar();
+
+		}
+
+		private void fechar() {
+			dispose();
+		}
 	}
+
 }
