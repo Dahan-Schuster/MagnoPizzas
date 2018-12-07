@@ -137,6 +137,7 @@ public class TelaAjuda extends JFrame {
 				}
 			}
 		});
+		//mudei aqui també, git
 		listaPerguntas.add("Por que preciso selecionar a data manualmente?");
 		listaPerguntas.add("Como vejo os dados de um um fornecedor, funcionario, item etc. cadastrado?");
 		listaPerguntas.add("Por que devo fechar uma mesa?");

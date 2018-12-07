@@ -127,12 +127,8 @@ public class TelaMenuPrincipal extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		int[] i = {1,2,3,4};
+		//Mudei denovo e denovo e denovo
 		
-		for (int j = 0; j < i.length; j++) {
-			System.out.println(j);
-		}
-
 		setData = new JButton(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
 		setData.setBounds(350, 380, 150, 40);
 		setData.setBackground(new Color(165, 42, 42));
@@ -146,6 +142,8 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 		panel.add(setData);
+		
+		// eita
 
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/pizzariaTelas/magnoLogo.png")));
