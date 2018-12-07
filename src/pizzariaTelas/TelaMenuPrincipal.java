@@ -138,7 +138,7 @@ public class TelaMenuPrincipal extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new TelaAlterarData().setVisible(true);
+				new TelaAlterarData().setVisible(true);;
 			}
 		});
 		panel.add(botaoAbrirTelaAlterarData);
