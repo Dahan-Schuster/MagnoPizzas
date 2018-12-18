@@ -63,7 +63,9 @@ public class TelaPresencial extends JFrame {
 
 	public TelaPresencial(String data) throws IOException, ParseException {
 		TelaPresencial.data = data;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Pedido Presencial");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 576, 537);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(165, 42, 42));

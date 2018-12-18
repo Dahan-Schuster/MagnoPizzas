@@ -51,8 +51,8 @@ public class TelaMenuPrincipal extends JFrame {
 	private JMenuItem atalhoTelaPedidoDelivery;
 	private JMenuItem atalhoTelaFecharMesa;
 
-	static final int WIDTH = 450;
-	static final int HEIGTH = 300;
+	static final int WIDTH = 530;
+	static final int HEIGTH = 500;
 
 	/**
 	 * Launch the application.
@@ -95,26 +95,6 @@ public class TelaMenuPrincipal extends JFrame {
 					new TelaCadastrarReceita().setVisible(true);
 					break;
 				}
-			} else {
-				switch (atalho) {
-				// Atalho para a tela de Ajuda
-				case KeyEvent.VK_F1:
-					new TelaAjuda().setVisible(true);
-					break;
-				// Atalhos para as telas de pedidos
-				case KeyEvent.VK_F2:
-					new TelaPresencial().setVisible(true);
-					break;
-				case KeyEvent.VK_F3:
-					new TelaDelivery().setVisible(true);
-					break;
-				case KeyEvent.VK_F4:
-					new TelaFecharMesa().setVisible(true);
-					break;
-				case KeyEvent.VK_SPACE:
-					menuAtalhos.doClick();
-					break;
-				}
 			}
 
 		} catch (IOException | ParseException possibleExeptions) {
@@ -130,7 +110,6 @@ public class TelaMenuPrincipal extends JFrame {
 		setPreferredSize(getDimension());
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 531, 479);
 		setLocationRelativeTo(null);
 
 		addKeyListener(new KeyAdapter() {
@@ -138,12 +117,9 @@ public class TelaMenuPrincipal extends JFrame {
 
 				int atalho = eventoTeclado.getKeyCode();
 
-				if (eventoTeclado.isAltDown()) {
+				if (eventoTeclado.isAltDown()) 
 					chamarTelaPorAtalho(atalho, true);
 
-				} else {
-					chamarTelaPorAtalho(atalho, false);
-				}
 			}
 		});
 
