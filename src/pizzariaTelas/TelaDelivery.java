@@ -30,6 +30,8 @@ import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 public class TelaDelivery extends JFrame {
@@ -40,6 +42,7 @@ public class TelaDelivery extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static String data;
+	private static JFormattedTextField ftxtQuant;
 
 	/**
 	 * Launch the application.
@@ -197,13 +200,15 @@ public class TelaDelivery extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					StringTokenizer st = new StringTokenizer(listReceitas.getSelectedItem(), "|");
+					
 					st.nextToken();
 					st.nextToken();
-					float preco = Float.parseFloat(st.nextToken().trim());
+					
+					float preco = tryParsePreco(st.nextToken());
 					
 					listReceitas.remove(listReceitas.getSelectedIndex());
 					
-					float Valortot = Float.parseFloat(txtValor.getText()) - preco;
+					float Valortot = tryParsePreco(txtValor.getText()) - preco;
 					txtValor.setText(String.format("%5.2f", Valortot));
 				} catch (ArrayIndexOutOfBoundsException n) {
 					JOptionPane.showMessageDialog(null, "Selecione uma receita da lista", "Erro",
@@ -222,8 +227,28 @@ public class TelaDelivery extends JFrame {
 
 		MaskFormatter maskQte = new MaskFormatter("###");
 		maskQte.setPlaceholderCharacter('0');
-		JFormattedTextField ftxtQuant = new JFormattedTextField(maskQte);
+		
+		ftxtQuant = new JFormattedTextField(maskQte);
 		ftxtQuant.setBounds(216, 78, 50, 20);
+		ftxtQuant.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_UP:
+					addQte(1);
+					break;
+				case KeyEvent.VK_DOWN:
+					addQte(-1);
+					break;
+				case KeyEvent.VK_PAGE_UP:
+					addQte(10);
+					break;
+				case KeyEvent.VK_PAGE_DOWN:
+					addQte(-10);
+					break;
+				}
+
+			}
+		});
 		panel_1.add(ftxtQuant);
 
 		JButton btnAdicionar = new JButton("Adicionar");
@@ -412,5 +437,33 @@ public class TelaDelivery extends JFrame {
 		btnLancar.setBackground(Color.LIGHT_GRAY);
 		btnLancar.setBounds(17, 397, 89, 23);
 		panel_1.add(btnLancar);
+	}
+	
+
+	private static void addQte(int qte) {
+		try {
+		int oldQte = Integer.parseInt(ftxtQuant.getText());
+		int newQte = oldQte + qte;
+		if (newQte > 999) {
+			ftxtQuant.setText("999");
+		} else if (newQte < 1) {
+			ftxtQuant.setText("001");
+		} else {
+			ftxtQuant.setText(String.format("%03d", newQte));
+		}
+		} catch (NumberFormatException n) {
+			ftxtQuant.setText("000");
+		}
+
+	}
+	
+	
+	private static float tryParsePreco(String preco) {
+		try {
+			return Float.parseFloat(preco);
+		} catch (NumberFormatException e) {
+			String[] numeros = preco.split(",");
+			return Float.parseFloat(numeros[0] + "." + numeros[1]);
+		}
 	}
 }

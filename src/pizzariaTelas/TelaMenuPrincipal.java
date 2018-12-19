@@ -109,6 +109,7 @@ public class TelaMenuPrincipal extends JFrame {
 		setTitle("MAGNO PIZZAS - MENU PRINCIPAL");
 		setPreferredSize(getDimension());
 		pack();
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
@@ -322,6 +323,7 @@ public class TelaMenuPrincipal extends JFrame {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Alterar data");
+			setResizable(false);
 			setBounds(10, 10, 300, 200);
 			setLocationRelativeTo(null);
 

@@ -254,11 +254,12 @@ public class TelaPresencial extends JFrame {
 					StringTokenizer st = new StringTokenizer(listaReceitas.getSelectedItem(), "|");
 					st.nextToken();
 					st.nextToken();
-					float preco = Float.parseFloat(st.nextToken().trim());
+					
+					float preco = tryParsePreco(st.nextToken());
 
 					listaReceitas.remove(listaReceitas.getSelectedIndex());
 
-					float Valortot = Float.parseFloat(txtValortot.getText()) - preco;
+					float Valortot = tryParsePreco(txtValortot.getText()) - preco;
 					txtValortot.setText(String.format("%5.2f", Valortot));
 				} catch (ArrayIndexOutOfBoundsException | NullPointerException  n) {
 					JOptionPane.showMessageDialog(null, "Selecione uma receita da lista", "Erro",
@@ -276,8 +277,10 @@ public class TelaPresencial extends JFrame {
 				float valor = 0, Valortot = 0;
 				try {
 					if (Integer.parseInt(ftxtQte.getText()) == 0) {
+					
 						JOptionPane.showMessageDialog(null, "Indique uma quantidade", "Erro",
 								JOptionPane.INFORMATION_MESSAGE);
+					
 					} else {
 
 						new Receita();
@@ -356,22 +359,17 @@ public class TelaPresencial extends JFrame {
 								String s = v[0] + "." + v[1]; // "15" + "." + "00" = 15.00
 								Valortot = Float.parseFloat(s) + valor;
 							}
-							System.out.println("aqui");
-							System.out.println(Valortot);
 							txtValortot.setText(String.format("%5.2f", Valortot));
 						} else {
-							JOptionPane.showMessageDialog(null, "Item indispon�vel.", "Erro",
+							JOptionPane.showMessageDialog(null, "Item indisponível.", "Erro",
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
-				}
-
-				catch (ArrayIndexOutOfBoundsException n) {
+				} catch (ArrayIndexOutOfBoundsException n) {
 					JOptionPane.showMessageDialog(null, "Selecione uma receita da lista", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -438,5 +436,14 @@ public class TelaPresencial extends JFrame {
 			ftxtQte.setText("000");
 		}
 
+	}
+	
+	private static float tryParsePreco(String preco) {
+		try {
+			return Float.parseFloat(preco);
+		} catch (NumberFormatException e) {
+			String[] numeros = preco.split(",");
+			return Float.parseFloat(numeros[0] + "." + numeros[1]);
+		}
 	}
 }
